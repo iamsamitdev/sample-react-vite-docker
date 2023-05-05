@@ -1,0 +1,25 @@
+version: '3.9'
+
+# Network
+networks:
+  web_network:
+    name: reactdockervite
+    driver: bridge
+
+services:
+  # React App Service
+  reactapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reactapp_vite
+    restart: always
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - 5173:5173
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - web_network
